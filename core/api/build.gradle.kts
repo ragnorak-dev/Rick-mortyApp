@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ragnorak.network"
+    namespace = "com.ragnorak.api"
     compileSdk = 35
 
     defaultConfig {
@@ -27,23 +27,22 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
 
+    implementation(project(Modules.coreNetwork))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.okhttp)
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
@@ -51,4 +50,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(kotlin("test"))
 }

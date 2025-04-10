@@ -1,4 +1,4 @@
-package com.ragnorak.rick_morty.character_list
+package com.ragnorak.ui
 
 import org.junit.Test
 

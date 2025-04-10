@@ -6,14 +6,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object CharacterListModule {
 
     @Provides
-    fun provideCharacterListUseCase(rickAndMortyApi: RickAndMortyApi): CharacterListDataSource {
-        return CharacterListDataSource(rickAndMortyApi)
-    }
+    fun provideCharacterListUseCase(rickAndMortyApi: RickAndMortyApi): CharacterListDataSource =
+        CharacterListDataSource(rickAndMortyApi)
 }

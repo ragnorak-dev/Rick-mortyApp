@@ -1,11 +1,11 @@
 package com.ragnorak.api.di
 
 import com.ragnorak.api.RickAndMortyApi
+import com.ragnorak.network.NetworkClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -14,8 +14,8 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideRickAndMortyApi(retrofit: Retrofit): RickAndMortyApi {
-        return retrofit.create(RickAndMortyApi::class.java)
+    fun provideRickAndMortyApi(networkClient: NetworkClient): RickAndMortyApi {
+        return networkClient.buildNetworkClient().create(RickAndMortyApi::class.java)
     }
 
 }

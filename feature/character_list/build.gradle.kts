@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
@@ -32,16 +33,24 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
 
     implementation(project(Modules.coreApi))
+    implementation(project(Modules.coreUi))
+    implementation(project(Modules.coreNavigation))
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.androidx.material3)
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -49,5 +58,4 @@ dependencies {
     testImplementation(libs.testing.kotlin.coroutines)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    testImplementation(kotlin("test"))
 }

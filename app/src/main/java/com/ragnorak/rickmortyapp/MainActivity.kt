@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.ragnorak.navigation.CharacterListDestination
+import com.ragnorak.rick_morty.character_details.ui.characterDetailsRouting
 import com.ragnorak.rick_morty.character_list.ui.characterListRouting
 import com.ragnorak.rickmortyapp.ui.theme.RickMortyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,15 +41,7 @@ class MainActivity : ComponentActivity() {
 fun MainNavHost() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = CharacterListDestination) {
-        characterListRouting()
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun MainNavHostPreview() {
-    RickMortyAppTheme {
-        MainNavHost()
+        characterListRouting(navController = navController)
+        characterDetailsRouting()
     }
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CharacterListDto(
-    val infoDto: InfoDto,
+    val info: InfoDto,
     val results: List<CharacterDto>
 )
 
@@ -24,8 +24,8 @@ data class CharacterDto(
     val species: String,
     val type: String,
     val gender: String,
-    val originDto: OriginDto,
-    val locationDto: LocationDto,
+    val origin: OriginDto,
+    val location: LocationDto,
     val image: String,
     val episode: List<String>,
     val url: String,

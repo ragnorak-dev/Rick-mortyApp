@@ -2,10 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.ragnorak.navigation"
+    namespace = "com.ragnorak.persistence"
     compileSdk = 35
 
     defaultConfig {
@@ -34,5 +36,11 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
     implementation(libs.kotlinx.serialization.json)
 }

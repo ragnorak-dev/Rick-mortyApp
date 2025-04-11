@@ -1,7 +1,9 @@
 package com.ragnorak.rick_morty.character_list.di
 
 import com.ragnorak.api.RickAndMortyApi
-import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListDataSource
+import com.ragnorak.persistence.dao.CharacterDao
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListLocalDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +14,10 @@ import dagger.hilt.components.SingletonComponent
 object CharacterListModule {
 
     @Provides
-    fun provideCharacterListUseCase(rickAndMortyApi: RickAndMortyApi): CharacterListDataSource =
-        CharacterListDataSource(rickAndMortyApi)
+    fun provideCharacterLisRemoteDataSource(rickAndMortyApi: RickAndMortyApi): CharacterListRemoteDataSource =
+        CharacterListRemoteDataSource(rickAndMortyApi)
+
+    @Provides
+    fun provideCharacterLisLocalDataSource(characterDao: CharacterDao): CharacterListLocalDataSource =
+        CharacterListLocalDataSource(characterDao)
 }

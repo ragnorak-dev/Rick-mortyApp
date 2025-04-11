@@ -25,11 +25,14 @@ class CharacterListViewModel @Inject constructor(
         .onStart { getCharacters() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ViewState.Idle)
 
+    private var currentPage = 0
+
     fun getCharacters() {
         viewModelScope.launch(Dispatchers.IO) {
             _characterListState.value = ViewState.Loading
-            characterListRepository.getCharacters()
+            characterListRepository.getCharacters(currentPage)
                 .onSuccess {
+                    currentPage = it.pagInfo.currentPage
                     _characterListState.value = ViewState.Success(it.characterList)
                 }
                 .onFailure {

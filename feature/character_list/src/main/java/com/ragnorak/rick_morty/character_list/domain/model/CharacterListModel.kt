@@ -6,6 +6,7 @@ data class CharacterListModel(
 )
 
 data class PaginationInfoModel(
+    val currentPage: Int,
     val next: Int?,
     val prev: Int?
 )

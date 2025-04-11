@@ -3,6 +3,7 @@ object Modules {
     const val coreNavigation = ":core:navigation"
     const val coreApi = ":core:api"
     const val coreUi = ":core:ui"
+    const val corePersistence = ":core:persistence"
 
     const val featureCharacterList = ":feature:character_list"
     const val featureCharacterDetails = ":feature:character_details"

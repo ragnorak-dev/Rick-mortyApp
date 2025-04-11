@@ -14,19 +14,19 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CharacterDtoListDataSourceTest {
+class CharacterListDataSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
     private lateinit var api: RickAndMortyApi
-    private lateinit var dataSource: CharacterListDataSource
+    private lateinit var sut: CharacterListDataSource
 
     @Before
     fun setup() {
         api = mockk()
-        dataSource = CharacterListDataSource(api)
+        sut = CharacterListDataSource(api)
     }
 
     @Test
@@ -34,7 +34,7 @@ class CharacterDtoListDataSourceTest {
         val expectedResponse = mockk<CharacterListDto>()
         coEvery { api.getCharacters() } returns expectedResponse
 
-        val result = dataSource.getCharacters()
+        val result = sut.getCharacters()
 
         assertTrue(result.isSuccess)
         assertEquals(expectedResponse, result.getOrNull())
@@ -46,7 +46,7 @@ class CharacterDtoListDataSourceTest {
         coEvery { exception.message } returns "Not http exception"
         coEvery { api.getCharacters() } throws exception
 
-        val result = dataSource.getCharacters()
+        val result = sut.getCharacters()
 
         assertTrue(result.isFailure)
         assertTrue(result.exceptionOrNull() is OwnHttpException.Unknown)

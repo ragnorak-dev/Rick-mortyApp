@@ -44,6 +44,7 @@ dependencies {
     implementation(project(Modules.coreUi))
     implementation(project(Modules.coreNavigation))
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -58,4 +59,5 @@ dependencies {
     testImplementation(libs.testing.kotlin.coroutines)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.ui.tooling)
 }

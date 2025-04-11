@@ -1,6 +1,6 @@
 package com.ragnorak.rick_morty.character_details.domain.model
 
-data class CharacterModel (
+data class CharacterDetailsModel (
     val id: Int,
     val name: String,
     val status: String,

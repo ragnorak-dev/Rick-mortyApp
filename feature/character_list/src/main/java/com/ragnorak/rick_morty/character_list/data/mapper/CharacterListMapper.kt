@@ -8,8 +8,8 @@ import com.ragnorak.rick_morty.character_list.domain.model.PaginationInfoModel
 fun CharacterListDto.toModel(): CharacterListModel {
     return CharacterListModel(
         pagInfo = PaginationInfoModel(
-            next = infoDto.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull(),
-            prev = infoDto.prev?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()
+            next = info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull(),
+            prev = info.prev?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()
         ),
         characterList = results.map {
             CharacterModel(

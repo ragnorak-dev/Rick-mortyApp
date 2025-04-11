@@ -3,13 +3,13 @@ package com.ragnorak.api.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CharacterResponse(
-    val info: Info,
-    val results: List<Character>
+data class CharacterListDto(
+    val infoDto: InfoDto,
+    val results: List<CharacterDto>
 )
 
 @Serializable
-data class Info(
+data class InfoDto(
     val count: Int,
     val pages: Int,
     val next: String?,
@@ -17,15 +17,15 @@ data class Info(
 )
 
 @Serializable
-data class Character(
+data class CharacterDto(
     val id: Int,
     val name: String,
     val status: String,
     val species: String,
     val type: String,
     val gender: String,
-    val origin: Origin,
-    val location: Location,
+    val originDto: OriginDto,
+    val locationDto: LocationDto,
     val image: String,
     val episode: List<String>,
     val url: String,
@@ -33,13 +33,13 @@ data class Character(
 )
 
 @Serializable
-data class Origin(
+data class OriginDto(
     val name: String,
     val url: String
 )
 
 @Serializable
-data class Location(
+data class LocationDto(
     val name: String,
     val url: String
 )

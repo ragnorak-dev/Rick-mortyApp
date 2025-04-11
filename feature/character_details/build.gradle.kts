@@ -42,6 +42,7 @@ dependencies {
 
     implementation(project(Modules.coreNetwork))
     implementation(project(Modules.coreNavigation))
+    implementation(project(Modules.coreApi))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.core.ktx)
@@ -52,6 +53,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.testing.kotlin.coroutines)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

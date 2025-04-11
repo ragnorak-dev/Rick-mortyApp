@@ -1,6 +1,6 @@
 package com.ragnorak.rick_morty.character_list.data.repository
 
-import com.ragnorak.api.response.CharacterResponse
+import com.ragnorak.api.response.CharacterListDto
 import com.ragnorak.rick_morty.character_list.CoroutinesTestRule
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListDataSource
 import com.ragnorak.rick_morty.character_list.data.mapper.toModel
@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CharacterListRepositoryImplTest {
+class CharacterDtoListRepositoryImplTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
@@ -31,7 +31,7 @@ class CharacterListRepositoryImplTest {
 
     @Test
     fun `getCharacters returns success when dataSource returns success`() = runTest {
-        val response = mockk<CharacterResponse>(relaxed = true)
+        val response = mockk<CharacterListDto>(relaxed = true)
         val expected = response.toModel()
         coEvery { dataSource.getCharacters() } returns Result.success(response)
 

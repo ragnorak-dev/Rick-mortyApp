@@ -42,6 +42,7 @@ dependencies {
 
     implementation(project(Modules.coreNetwork))
     implementation(project(Modules.coreNavigation))
+    implementation(project(Modules.coreApi))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.core.ktx)

@@ -2,7 +2,7 @@ package com.ragnorak.rick_morty.character_list.data.datasource
 
 import com.ragnorak.api.RickAndMortyApi
 import com.ragnorak.api.errorhandler.OwnHttpException
-import com.ragnorak.api.response.CharacterResponse
+import com.ragnorak.api.response.CharacterListDto
 import com.ragnorak.rick_morty.character_list.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CharacterListDataSourceTest {
+class CharacterDtoListDataSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
@@ -31,7 +31,7 @@ class CharacterListDataSourceTest {
 
     @Test
     fun `getCharacters returns success when API call is successful`() = runTest {
-        val expectedResponse = mockk<CharacterResponse>()
+        val expectedResponse = mockk<CharacterListDto>()
         coEvery { api.getCharacters() } returns expectedResponse
 
         val result = dataSource.getCharacters()

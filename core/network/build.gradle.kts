@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.hilt.android)
-    implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)

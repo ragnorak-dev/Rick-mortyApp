@@ -2,7 +2,7 @@ package com.ragnorak.rick_morty.character_list.data.repository
 
 import com.ragnorak.api.response.CharacterListDto
 import com.ragnorak.rick_morty.character_list.CoroutinesTestRule
-import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListDataSource
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import com.ragnorak.rick_morty.character_list.data.mapper.toModel
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -20,7 +20,7 @@ class CharacterListRepositoryImplTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private lateinit var dataSource: CharacterListDataSource
+    private lateinit var dataSource: CharacterListRemoteDataSource
     private lateinit var sut: CharacterListRepositoryImpl
 
     @Before

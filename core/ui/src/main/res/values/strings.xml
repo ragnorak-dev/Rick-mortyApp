@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="GLOBAL_retry">Retry</string>
 
     <string name="ERROR_title">Error</string>
     <string name="ERROR_general">An error has occurred</string>
@@ -9,4 +10,17 @@
     <string name="character_detail_species">Species</string>
     <string name="character_detail_type">Type</string>
     <string name="character_detail_gender">Gender</string>
+
+    <string name="character_search_bar_placeholder">Search character</string>
+
+    <string name="error_bad_request">Bad request</string>
+    <string name="error_forbidden">Access forbidden</string>
+    <string name="error_not_found">Resource not found</string>
+    <string name="error_request_timeout">Request timed out</string>
+    <string name="error_too_many_requests">Too many requests</string>
+    <string name="error_internal_server_error">Internal server error</string>
+    <string name="error_bad_gateway">Bad gateway</string>
+    <string name="error_service_unavailable">Service unavailable</string>
+    <string name="error_gateway_timeout">Gateway timeout</string>
+    <string name="error_unknown">Unknown error</string>
 </resources>

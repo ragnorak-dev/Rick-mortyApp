@@ -34,7 +34,7 @@ class CharacterListRemoteDataSourceTest {
         val expectedResponse = mockk<CharacterListDto>()
         coEvery { api.getCharacters() } returns expectedResponse
 
-        val result = sut.getCharacters()
+        val result = sut.getCharacters(page = 0)
 
         assertTrue(result.isSuccess)
         assertEquals(expectedResponse, result.getOrNull())
@@ -46,7 +46,7 @@ class CharacterListRemoteDataSourceTest {
         coEvery { exception.message } returns "Not http exception"
         coEvery { api.getCharacters() } throws exception
 
-        val result = sut.getCharacters()
+        val result = sut.getCharacters(page = 0)
 
         assertTrue(result.isFailure)
         assertTrue(result.exceptionOrNull() is OwnHttpException.Unknown)

@@ -29,9 +29,14 @@ fun NavGraphBuilder.characterListRouting(
             sharedTransitionScope = sharedTransitionScope,
             animatedVisibilityScope = this@composable,
             uiState = uiState,
-            onRetry = { viewModel.onIntent(CharacterListIntent.LoadCharacters) },
-            onItemClick = { id -> navController.navigate(CharacterDetailsDestination(id)) },
-            loadNextPage = { viewModel.onIntent(CharacterListIntent.LoadMoreCharacters) }
+            actions = CharacterListActions(
+                onRetry = { viewModel.onIntent(CharacterListIntent.LoadCharacters) },
+                onItemClick = { id -> navController.navigate(CharacterDetailsDestination(id)) },
+                loadNextPage = { viewModel.onIntent(CharacterListIntent.LoadMoreCharacters) },
+                onSearchQueryChange = { viewModel.onIntent(CharacterListIntent.UpdateSearchQuery(it)) },
+                onClickSearchQuery = { viewModel.onIntent(CharacterListIntent.SearchRemoteCharacter(it)) }
+
+            )
         )
     }
 }

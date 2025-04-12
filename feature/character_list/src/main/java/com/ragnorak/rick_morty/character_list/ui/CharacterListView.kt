@@ -5,23 +5,28 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.Image
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -36,15 +41,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.ragnorak.rick_morty.character_list.domain.model.CharacterModel
+import com.ragnorak.rick_morty.character_list.ui.component.SearchBar
 import com.ragnorak.ui.R
 import com.ragnorak.ui.ViewState
 import com.ragnorak.ui.component.ErrorComponent
 import com.ragnorak.ui.component.LoadingComponent
-import coil.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
@@ -52,9 +58,7 @@ fun CharacterListScreen(
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
     uiState: CharacterListUiState,
-    onRetry: () -> Unit = {},
-    onItemClick: (Int) -> Unit,
-    loadNextPage: () -> Unit
+    actions: CharacterListActions
 ) {
     val pullRefreshState = rememberPullToRefreshState()
     var isRefreshing by remember { mutableStateOf(false) }
@@ -66,7 +70,7 @@ fun CharacterListScreen(
         isRefreshing = isRefreshing,
         onRefresh = {
             isRefreshing = true
-            onRetry()
+            actions.onRetry()
         }
     ) {
         when (val state = uiState.listState) {
@@ -82,11 +86,10 @@ fun CharacterListScreen(
                 CharacterListView(
                     sharedTransitionScope = sharedTransitionScope,
                     animatedVisibilityScope = animatedVisibilityScope,
-                    characters = state.data,
-                    onItemClick = onItemClick,
-                    loadNextPage = loadNextPage,
-                    isPaginating = uiState.isPaginating
+                    uiState = uiState,
+                    actions = actions
                 )
+
                 if (uiState.isPaginating) {
                     LoadingComponent()
                 }
@@ -94,7 +97,7 @@ fun CharacterListScreen(
 
             is ViewState.Error -> {
                 isRefreshing = false
-                ErrorComponent(state.message)
+                ErrorComponent(state.uiError)
             }
         }
     }
@@ -105,12 +108,15 @@ fun CharacterListScreen(
 private fun CharacterListView(
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    characters: List<CharacterModel>,
-    onItemClick: (Int) -> Unit,
-    loadNextPage: () -> Unit,
-    isPaginating: Boolean
+    uiState: CharacterListUiState,
+    actions: CharacterListActions
 ) {
     val gridState = rememberLazyGridState()
+    val characters = if (uiState.searchQuery.isEmpty()) {
+        (uiState.listState as ViewState.Success<List<CharacterModel>>).data
+    } else {
+        uiState.filteredList
+    }
 
     LaunchedEffect(gridState) {
         snapshotFlow {
@@ -118,31 +124,58 @@ private fun CharacterListView(
         }.collect {
             val lastVisibleItem = it.visibleItemsInfo.lastOrNull()
             val totalItemsCount = it.totalItemsCount
-            if (lastVisibleItem?.index == totalItemsCount - 1 && !isPaginating) {
-                loadNextPage()
+            if (lastVisibleItem?.index == totalItemsCount - 1 && !uiState.isPaginating) {
+                actions.loadNextPage()
             }
         }
     }
-    LazyVerticalGrid(
-        state = gridState,
-        columns = GridCells.Fixed(2),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.paddingM)),
-        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS))
-    ) {
-        items(characters.size, key = { it }) { index ->
-            val character = characters[index]
-            CharacterItem(
-                sharedTransitionScope = sharedTransitionScope,
-                animatedVisibilityScope = animatedVisibilityScope,
-                character,
-                onItemClick
-            )
+    Scaffold(
+        topBar = {
+            with(animatedVisibilityScope) {
+                Column(
+                   modifier = Modifier.animateEnterExit(
+                       enter = slideInVertically(
+                            animationSpec = tween(durationMillis = 500),
+                       ),
+                       exit = slideOutVertically()
+                   )
+                ) {
+                    SearchBar(
+                        uiState = uiState,
+                        actions = actions
+                    )
+                }
+            }
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            LazyVerticalGrid(
+                state = gridState,
+                columns = GridCells.Fixed(2),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(dimensionResource(id = R.dimen.paddingXS)),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS)),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS))
+            ) {
+                items(characters.size, key = { it }) { index ->
+                    val character = characters[index]
+                    CharacterItem(
+                        sharedTransitionScope = sharedTransitionScope,
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        character,
+                        actions.onItemClick
+                    )
+                }
+            }
         }
     }
 }
+
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -175,7 +208,7 @@ private fun CharacterItem(
                 )
                 Text(
                     text = character.name,
-                    style = androidx.compose.material3.MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(top = dimensionResource(id = R.dimen.paddingXS))
                 )
             }
@@ -227,9 +260,13 @@ fun CharacterDetailsScreenPreview() {
                     isRefreshing = false,
                     isPaginating = false
                 ),
-                onRetry = {},
-                onItemClick = {},
-                loadNextPage = {}
+                actions = CharacterListActions(
+                    onRetry = {},
+                    onItemClick = {},
+                    loadNextPage = {},
+                    onSearchQueryChange = {},
+                    onClickSearchQuery = {}
+                )
             )
         }
     }

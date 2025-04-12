@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="GLOBAL_retry">Reintentar</string>
 
     <string name="ERROR_title">Error</string>
     <string name="ERROR_general">Ha ocurrido un error</string>
@@ -9,4 +10,17 @@
     <string name="character_detail_species">Especie</string>
     <string name="character_detail_type">Tipo</string>
     <string name="character_detail_gender">Género</string>
+
+    <string name="character_search_bar_placeholder">Buscar personaje</string>
+
+    <string name="error_bad_request">Solicitud incorrecta</string>
+    <string name="error_forbidden">Acceso denegado</string>
+    <string name="error_not_found">Recurso no encontrado</string>
+    <string name="error_request_timeout">Tiempo de espera agotado</string>
+    <string name="error_too_many_requests">Demasiadas solicitudes</string>
+    <string name="error_internal_server_error">Error interno del servidor</string>
+    <string name="error_bad_gateway">Puerta de enlace incorrecta</string>
+    <string name="error_service_unavailable">Servicio no disponible</string>
+    <string name="error_gateway_timeout">Tiempo de espera de la puerta de enlace agotado</string>
+    <string name="error_unknown">Error desconocido</string>
 </resources>

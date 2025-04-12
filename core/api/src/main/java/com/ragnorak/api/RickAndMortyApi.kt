@@ -13,4 +13,7 @@ interface RickAndMortyApi {
     @GET("character/{id}")
     suspend fun getCharacterDetails(@Path("id") characterId: Int): CharacterDto
 
+    @GET("character")
+    suspend fun getCharactersByName(@Query("name") name: String): CharacterListDto
+
 }

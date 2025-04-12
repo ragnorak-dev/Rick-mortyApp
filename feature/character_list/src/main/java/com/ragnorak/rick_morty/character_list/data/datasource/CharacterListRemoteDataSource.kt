@@ -15,4 +15,11 @@ class CharacterListRemoteDataSource @Inject constructor(
         } catch (exception: Exception) {
             Result.failure(exception.httpExceptionHandler())
         }
+
+    suspend fun getCharactersByName(name: String): Result<CharacterListDto> =
+        try {
+            Result.success(networkClient.getCharactersByName(name))
+        } catch (exception: Exception) {
+            Result.failure(exception.httpExceptionHandler())
+        }
 }

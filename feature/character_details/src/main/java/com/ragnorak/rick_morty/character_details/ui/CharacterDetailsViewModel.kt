@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ragnorak.rick_morty.character_details.domain.model.CharacterDetailsModel
 import com.ragnorak.rick_morty.character_details.domain.repository.CharacterDetailsRepository
 import com.ragnorak.ui.ViewState
+import com.ragnorak.ui.errormanage.mapToUiError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +29,7 @@ class CharacterDetailsViewModel @Inject constructor(
                     _uiState.value = ViewState.Success(it)
                 }
                 .onFailure {
-                    _uiState.value = ViewState.Error(it.message ?: "Unknown error")
+                    _uiState.value = ViewState.Error(it.mapToUiError { getCharacterDetails(id) })
                 }
         }
     }

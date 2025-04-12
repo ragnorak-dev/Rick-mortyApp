@@ -16,7 +16,7 @@ class CharacterDetailsRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacterDetails(characterId: Int): Result<CharacterDetailsModel> {
         val cached = localDataSource.getCharacterDetails(characterId)
-       return if (CacheValidator.isCacheValid(cached.getOrNull()?.lastUpdated) && cached.isSuccess) {
+        return if (CacheValidator.isCacheValid(cached.getOrNull()?.lastUpdated) && cached.isSuccess) {
             cached.map { it.toModel() }
         } else {
             remoteDataSource.getCharacterDetails(characterId).map { dto ->

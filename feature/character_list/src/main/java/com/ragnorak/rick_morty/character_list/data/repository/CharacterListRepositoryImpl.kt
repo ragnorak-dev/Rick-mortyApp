@@ -31,4 +31,9 @@ class CharacterListRepositoryImpl @Inject constructor(
             dto.toModel()
         }
     }
+
+    override suspend fun getCharactersByName(name: String): Result<CharacterListModel> =
+        remoteDataSource.getCharactersByName(name).map { dto ->
+            dto.toModel()
+        }
 }

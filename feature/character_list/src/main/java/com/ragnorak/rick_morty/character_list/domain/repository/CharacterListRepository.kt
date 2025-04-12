@@ -5,4 +5,6 @@ import com.ragnorak.rick_morty.character_list.domain.model.CharacterListModel
 interface CharacterListRepository {
 
     suspend fun getCharacters(page: Int = 0): Result<CharacterListModel>
+
+    suspend fun getCharactersByName(name: String): Result<CharacterListModel>
 }

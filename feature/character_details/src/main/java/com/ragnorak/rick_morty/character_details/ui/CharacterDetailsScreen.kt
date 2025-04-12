@@ -5,30 +5,26 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import com.ragnorak.ui.R
 import com.ragnorak.rick_morty.character_details.domain.model.CharacterDetailsModel
+import com.ragnorak.ui.R
 import com.ragnorak.ui.ViewState
 import com.ragnorak.ui.component.ErrorComponent
 import com.ragnorak.ui.component.LoadingComponent
@@ -41,17 +37,25 @@ fun CharacterDetailsScreen(
     uiState: ViewState<CharacterDetailsModel> = ViewState.Idle,
 ) {
 
-    when (uiState) {
-        is ViewState.Loading -> LoadingComponent()
-        is ViewState.Success -> CharacterDetailsView(
-            sharedTransitionScope = sharedTransitionScope,
-            animatedVisibilityScope = animatedVisibilityScope,
-            uiState.data
-        )
+    Box(
+        contentAlignment = Alignment.Center,
+    ) {
+        when (uiState) {
+            is ViewState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center) {
+                    LoadingComponent()
+                }
+        }
+            is ViewState.Success -> CharacterDetailsView(
+                sharedTransitionScope = sharedTransitionScope,
+                animatedVisibilityScope = animatedVisibilityScope,
+                uiState.data
+            )
 
-        is ViewState.Error -> ErrorComponent()
-        else -> {}
-
+            is ViewState.Error -> ErrorComponent(uiState.uiError)
+            else -> {}
+        }
     }
 }
 
@@ -64,7 +68,6 @@ fun CharacterDetailsView(
 ) {
 
     with(sharedTransitionScope) {
-
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -76,8 +79,7 @@ fun CharacterDetailsView(
                         state = rememberSharedContentState(key = "image-${data.image}"),
                         animatedVisibilityScope = animatedVisibilityScope
                     )
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.medium),
+                    .fillMaxWidth(),
                 model = data.image,
                 contentDescription = data.name,
                 contentScale = ContentScale.Crop
@@ -94,24 +96,8 @@ fun CharacterDetailsView(
                     R.string.character_detail_gender to data.gender
                 )
 
-                items.forEachIndexed { index, (labelRes, value) ->
-                    AnimatedVisibility(
-                        visible = true,
-                        enter = fadeIn(
-                            animationSpec = tween(
-                                durationMillis = 300,
-                                delayMillis = index * 100
-                            )
-                        ) + slideInVertically(
-                            animationSpec = tween(
-                                durationMillis = 300,
-                                delayMillis = index * 100
-                            ),
-                            initialOffsetY = { it / 2 }
-                        )
-                    ) {
-                        CardInfo(label = stringResource(id = labelRes), value = value)
-                    }
+                items.forEach { (labelRes, value) ->
+                    CardInfo(label = stringResource(id = labelRes), value = value)
                 }
             }
         }

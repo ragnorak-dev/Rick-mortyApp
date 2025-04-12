@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation(project(Modules.coreApi))
     implementation(libs.androidx.core.ktx)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)

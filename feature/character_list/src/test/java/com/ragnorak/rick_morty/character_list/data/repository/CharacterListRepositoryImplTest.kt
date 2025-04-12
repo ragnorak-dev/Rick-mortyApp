@@ -36,7 +36,8 @@ class CharacterListRepositoryImplTest {
     fun `getCharacters returns success when dataSource returns success`() = runTest {
         val response = mockk<CharacterListDto>(relaxed = true)
         val expected = response.toModel()
-        coEvery { remoteDataSource.getCharacters() } returns Result.success(response)
+        coEvery { localDataSource.saveCharactersPage(any()) } returns Result.success(Unit)
+        coEvery { remoteDataSource.getCharacters(page = 0) } returns Result.success(response)
 
         val result = sut.getCharacters()
 
@@ -47,11 +48,44 @@ class CharacterListRepositoryImplTest {
     @Test
     fun `getCharacters returns failure when dataSource returns failure`() = runTest {
         val exception = RuntimeException("Error")
-        coEvery { remoteDataSource.getCharacters() } returns Result.failure(exception)
+        coEvery { remoteDataSource.getCharacters(page = 0) } returns Result.failure(exception)
 
         val result = sut.getCharacters()
 
         assertTrue(result.isFailure)
         assertEquals(exception, result.exceptionOrNull())
+    }
+
+
+    @Test
+    fun `getCharacters returns remote data when cache is valid but local fails`() = runTest {
+        val response = mockk<CharacterListDto>(relaxed = true)
+        val expected = response.toModel()
+
+        coEvery { localDataSource.getCharactersByPage(0) } returns Result.failure(Exception("local error"))
+        coEvery { remoteDataSource.getCharacters(page = 0) } returns Result.success(response)
+        coEvery { localDataSource.saveCharactersPage(any()) } returns Result.success(Unit)
+
+        val result = sut.getCharacters()
+
+        assertTrue(result.isSuccess)
+        assertEquals(expected, result.getOrNull())
+    }
+
+    @Test
+    fun `getCharacters returns remote data when cache is invalid`() = runTest {
+        val response = mockk<CharacterListDto>(relaxed = true)
+        val expected = response.toModel()
+
+        val validator = com.ragnorak.persistence.validatecache.CacheValidator
+        validator.updateFetchTime()
+
+        coEvery { remoteDataSource.getCharacters(page = 0) } returns Result.success(response)
+        coEvery { localDataSource.saveCharactersPage(any()) } returns Result.success(Unit)
+
+        val result = sut.getCharacters()
+
+        assertTrue(result.isSuccess)
+        assertEquals(expected, result.getOrNull())
     }
 }

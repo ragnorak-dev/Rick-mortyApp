@@ -16,9 +16,16 @@ class CharacterListRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacters(page: Int): Result<CharacterListModel> {
         if (CacheValidator.isCacheValid()) {
-           return localDataSource.getCharactersByPage(page).map { it.toModel() }
+            return runCatching {
+                localDataSource.getCharactersByPage(page).getOrThrow().toModel()
+            }.recoverCatching {
+                val dto = remoteDataSource.getCharacters(page).getOrThrow()
+                localDataSource.saveCharactersPage(dto.toEntity())
+                CacheValidator.updateFetchTime()
+                dto.toModel()
+            }
         }
-        return remoteDataSource.getCharacters().map { dto ->
+        return remoteDataSource.getCharacters(page).map { dto ->
             localDataSource.saveCharactersPage(dto.toEntity())
             CacheValidator.updateFetchTime()
             dto.toModel()

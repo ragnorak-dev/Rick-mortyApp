@@ -3,4 +3,10 @@
 
     <string name="ERROR_title">Error</string>
     <string name="ERROR_general">Ha ocurrido un error</string>
+
+    <string name="character_detail_name">Nombre</string>
+    <string name="character_detail_status">Estado</string>
+    <string name="character_detail_species">Especie</string>
+    <string name="character_detail_type">Tipo</string>
+    <string name="character_detail_gender">Género</string>
 </resources>

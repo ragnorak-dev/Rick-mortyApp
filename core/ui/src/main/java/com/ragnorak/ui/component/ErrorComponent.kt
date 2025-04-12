@@ -10,13 +10,13 @@ import androidx.compose.ui.res.stringResource
 import com.ragnorak.ui.R
 
 @Composable
-fun ErrorComponent() {
+fun ErrorComponent(message: String? = null) {
    Box(
        modifier = Modifier
            .fillMaxSize(),
        contentAlignment = Alignment.Center
    ) {
 
-       Text(text = stringResource(id = R.string.ERROR_general))
+       Text(text = message ?: stringResource(id = R.string.ERROR_general))
    }
 }

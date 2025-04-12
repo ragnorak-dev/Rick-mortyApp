@@ -4,10 +4,11 @@ import com.ragnorak.api.response.CharacterDto
 import com.ragnorak.api.response.CharacterListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RickAndMortyApi {
     @GET("character")
-    suspend fun getCharacters(): CharacterListDto
+    suspend fun getCharacters(@Query("page") page: Int = 0): CharacterListDto
 
     @GET("character/{id}")
     suspend fun getCharacterDetails(@Path("id") characterId: Int): CharacterDto

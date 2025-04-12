@@ -2,6 +2,7 @@ package com.ragnorak.rick_morty.character_details.data.repository
 
 import com.ragnorak.api.response.CharacterDto
 import com.ragnorak.rick_morty.character_details.CoroutinesTestRule
+import com.ragnorak.rick_morty.character_details.data.datasource.CharacterDetailsLocalDataSource
 import com.ragnorak.rick_morty.character_details.data.datasource.CharacterDetailsRemoteDataSource
 import com.ragnorak.rick_morty.character_details.data.mapper.toModel
 import io.mockk.coEvery
@@ -21,12 +22,14 @@ class CharacterDetailsRepositoryImplTest {
     val coroutinesTestRule = CoroutinesTestRule()
 
     private lateinit var remoteDataSource: CharacterDetailsRemoteDataSource
+    private lateinit var localDataSource: CharacterDetailsLocalDataSource
     private lateinit var sut: CharacterDetailsRepositoryImpl
 
     @Before
     fun setup() {
         remoteDataSource = mockk()
-        sut = CharacterDetailsRepositoryImpl(remoteDataSource)
+        localDataSource = mockk()
+        sut = CharacterDetailsRepositoryImpl(remoteDataSource, localDataSource)
     }
 
     @Test

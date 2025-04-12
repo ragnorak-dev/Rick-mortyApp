@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="topBarHeight">50dp</dimen>
+
+    <dimen name="paddingXS">4dp</dimen>
+    <dimen name="paddingS">8dp</dimen>
     <dimen name="paddingM">16dp</dimen>
 </resources>

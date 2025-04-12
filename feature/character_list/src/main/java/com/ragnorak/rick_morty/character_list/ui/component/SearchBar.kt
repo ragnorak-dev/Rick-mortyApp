@@ -17,13 +17,14 @@ import com.ragnorak.ui.R
 
 @Composable
 fun SearchBar(
+    modifier: Modifier = Modifier,
     uiState: CharacterListUiState,
     actions: CharacterListActions,
 ) {
     TextField(
         value = uiState.searchQuery,
         onValueChange = actions.onSearchQueryChange,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         placeholder = { Text(text = stringResource(id = R.string.character_search_bar_placeholder)) },
         leadingIcon = {
             Icon(

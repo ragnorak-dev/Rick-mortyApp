@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class CharacterDetailsRepositoryModule {
 
     @Binds
-    abstract fun bindCharacterListRepository(
+    abstract fun bindCharacterDetailsRepository(
         impl: CharacterDetailsRepositoryImpl
     ): CharacterDetailsRepository
 }

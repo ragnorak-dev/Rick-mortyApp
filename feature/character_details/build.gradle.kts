@@ -46,7 +46,6 @@ android {
 
 dependencies {
 
-    implementation(project(Modules.coreNetwork))
     implementation(project(Modules.coreNavigation))
     implementation(project(Modules.coreApi))
     implementation(project(Modules.coreUi))
@@ -54,8 +53,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.compose.navigation)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material3)
     implementation(libs.compose.animation)
     implementation(libs.coil.compose)
@@ -67,8 +64,6 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.testing.kotlin.coroutines)
     testImplementation(libs.turbine)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.ui.tooling)
 
     detektPlugins(libs.detekt.formatting)

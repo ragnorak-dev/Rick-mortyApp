@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ragnorak.rickmortyapp.test">
+
+    <application
+        android:name="dagger.hilt.android.testing.HiltTestApplication"
+        android:label="Rick and Morty Test" />
+</manifest>

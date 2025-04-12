@@ -15,5 +15,4 @@ abstract class CharacterDetailsRepositoryModule {
     abstract fun bindCharacterDetailsRepository(
         impl: CharacterDetailsRepositoryImpl
     ): CharacterDetailsRepository
-
 }

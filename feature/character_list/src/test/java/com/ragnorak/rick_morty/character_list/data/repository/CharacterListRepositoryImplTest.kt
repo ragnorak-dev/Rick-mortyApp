@@ -56,7 +56,6 @@ class CharacterListRepositoryImplTest {
         assertEquals(exception, result.exceptionOrNull())
     }
 
-
     @Test
     fun `getCharacters returns remote data when cache is valid but local fails`() = runTest {
         val response = mockk<CharacterListDto>(relaxed = true)

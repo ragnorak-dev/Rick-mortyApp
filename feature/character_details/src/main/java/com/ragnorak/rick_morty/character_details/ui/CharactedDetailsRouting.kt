@@ -1,6 +1,5 @@
 package com.ragnorak.rick_morty.character_details.ui
 
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +15,7 @@ import com.ragnorak.navigation.CharacterDetailsDestination
 fun NavGraphBuilder.characterDetailsRouting(
     sharedTransitionScope: SharedTransitionScope,
 ) {
-    composable<CharacterDetailsDestination>{ backStack ->
+    composable<CharacterDetailsDestination> { backStack ->
         val viewModel: CharacterDetailsViewModel = hiltViewModel()
         val state by viewModel.uiState.collectAsStateWithLifecycle()
 

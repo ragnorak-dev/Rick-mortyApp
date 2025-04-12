@@ -1,8 +1,8 @@
 package com.ragnorak.rick_morty.character_list.data.repository
 
 import com.ragnorak.persistence.validatecache.CacheValidator
-import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListLocalDataSource
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import com.ragnorak.rick_morty.character_list.data.mapper.toEntity
 import com.ragnorak.rick_morty.character_list.data.mapper.toModel
 import com.ragnorak.rick_morty.character_list.domain.model.CharacterListModel

@@ -11,7 +11,7 @@ import com.ragnorak.rick_morty.character_list.domain.model.PaginationInfoModel
 fun CharacterListDto.toModel(): CharacterListModel {
     return CharacterListModel(
         pagInfo = PaginationInfoModel(
-            currentPage = (info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()?.minus(1))
+            currentPage = info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()?.minus(1)
                 ?: info.pages,
             next = info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull(),
             prev = info.prev?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()
@@ -44,7 +44,7 @@ fun CharacterDto.toEntity(): CharacterEntity =
 
 fun CharacterListDto.toEntity(): CharacterListEntity =
     CharacterListEntity(
-        page = (info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()?.minus(1))
+        page = info.next?.substringAfter("page=")?.substringBefore("&")?.toIntOrNull()?.minus(1)
             ?: info.pages,
         count = info.count,
         pages = info.pages,

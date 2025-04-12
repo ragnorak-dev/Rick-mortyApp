@@ -2,5 +2,11 @@
 <resources>
 
     <string name="ERROR_title">Error</string>
-    <string name="ERROR_general">An error has occurred</string>">
+    <string name="ERROR_general">An error has occurred</string>
+
+    <string name="character_detail_name">Name</string>
+    <string name="character_detail_status">Status</string>
+    <string name="character_detail_species">Species</string>
+    <string name="character_detail_type">Type</string>
+    <string name="character_detail_gender">Gender</string>
 </resources>

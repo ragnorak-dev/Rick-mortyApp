@@ -2,6 +2,7 @@ package com.ragnorak.rick_morty.character_list.data.repository
 
 import com.ragnorak.api.response.CharacterListDto
 import com.ragnorak.rick_morty.character_list.CoroutinesTestRule
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListLocalDataSource
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import com.ragnorak.rick_morty.character_list.data.mapper.toModel
 import io.mockk.coEvery
@@ -20,20 +21,22 @@ class CharacterListRepositoryImplTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private lateinit var dataSource: CharacterListRemoteDataSource
+    private lateinit var remoteDataSource: CharacterListRemoteDataSource
+    private lateinit var localDataSource: CharacterListLocalDataSource
     private lateinit var sut: CharacterListRepositoryImpl
 
     @Before
     fun setup() {
-        dataSource = mockk()
-        sut = CharacterListRepositoryImpl(dataSource)
+        remoteDataSource = mockk()
+        localDataSource = mockk()
+        sut = CharacterListRepositoryImpl(remoteDataSource, localDataSource)
     }
 
     @Test
     fun `getCharacters returns success when dataSource returns success`() = runTest {
         val response = mockk<CharacterListDto>(relaxed = true)
         val expected = response.toModel()
-        coEvery { dataSource.getCharacters() } returns Result.success(response)
+        coEvery { remoteDataSource.getCharacters() } returns Result.success(response)
 
         val result = sut.getCharacters()
 
@@ -44,7 +47,7 @@ class CharacterListRepositoryImplTest {
     @Test
     fun `getCharacters returns failure when dataSource returns failure`() = runTest {
         val exception = RuntimeException("Error")
-        coEvery { dataSource.getCharacters() } returns Result.failure(exception)
+        coEvery { remoteDataSource.getCharacters() } returns Result.failure(exception)
 
         val result = sut.getCharacters()
 

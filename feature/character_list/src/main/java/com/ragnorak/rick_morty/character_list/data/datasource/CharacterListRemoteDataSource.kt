@@ -9,9 +9,9 @@ class CharacterListRemoteDataSource @Inject constructor(
     private val networkClient: RickAndMortyApi
 ) {
 
-    suspend fun getCharacters(): Result<CharacterListDto> =
+    suspend fun getCharacters(page: Int): Result<CharacterListDto> =
         try {
-            Result.success(networkClient.getCharacters())
+            Result.success(networkClient.getCharacters(page))
         } catch (exception: Exception) {
             Result.failure(exception.httpExceptionHandler())
         }

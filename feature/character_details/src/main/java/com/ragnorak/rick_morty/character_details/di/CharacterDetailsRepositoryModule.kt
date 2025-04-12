@@ -9,10 +9,10 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CharacterListRepositoryModule {
+abstract class CharacterDetailsRepositoryModule {
 
     @Binds
-    abstract fun bindCharacterListRepository(
+    abstract fun bindCharacterDetailsRepository(
         impl: CharacterDetailsRepositoryImpl
     ): CharacterDetailsRepository
 

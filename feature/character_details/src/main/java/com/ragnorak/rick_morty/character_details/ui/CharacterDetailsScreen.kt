@@ -19,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.ragnorak.rick_morty.character_details.domain.model.CharacterDetailsModel
+import com.ragnorak.ui.ComponentIdentifier
 import com.ragnorak.ui.R
 import com.ragnorak.ui.ViewState
 import com.ragnorak.ui.component.ErrorComponent
@@ -106,16 +108,32 @@ fun CharacterDetailsView(
 
 @Composable
 private fun CardInfo(label: String, value: String) {
+    val tag = getTestTag(label)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = dimensionResource(id = R.dimen.paddingS))
+            .then(if (tag.isNotEmpty()) Modifier.testTag(tag) else Modifier)
     ) {
         Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.paddingM))) {
             Text(text = label, style = MaterialTheme.typography.labelSmall)
             Text(text = value, style = MaterialTheme.typography.bodyLarge)
         }
     }
+}
+
+@Composable
+private fun getTestTag(label: String): String {
+    val tag = when (label) {
+        stringResource(id = R.string.character_detail_name) -> ComponentIdentifier.DETAILS_CARD_FIELD_NAME
+        stringResource(id = R.string.character_detail_status) -> ComponentIdentifier.DETAILS_CARD_FIELD_STATUS
+        stringResource(id = R.string.character_detail_species) -> ComponentIdentifier.DETAILS_CARD_FIELD_SPECIES
+        stringResource(id = R.string.character_detail_type) -> ComponentIdentifier.DETAILS_CARD_FIELD_TYPE
+        stringResource(id = R.string.character_detail_gender) -> ComponentIdentifier.DETAILS_CARD_FIELD_GENDER
+        else -> ""
+    }
+    return tag
 }
 
 

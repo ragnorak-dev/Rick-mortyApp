@@ -17,7 +17,14 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.ragnorak.rickmortyapp.CustomTestRunner"
+    }
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
+
+    sourceSets {
+        getByName("androidTest").manifest.srcFile("src/androidTest/AndroidManifest.xml")
     }
 
     buildTypes {
@@ -46,24 +53,19 @@ dependencies {
     implementation(project(Modules.featureCharacterList))
     implementation(project(Modules.featureCharacterDetails))
     implementation(project(Modules.coreNavigation))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(project(Modules.coreApi))
+    androidTestImplementation(project(Modules.coreUi))
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.hilt.testing)
+    androidTestUtil(libs.androidx.orchestrator)
+
 }

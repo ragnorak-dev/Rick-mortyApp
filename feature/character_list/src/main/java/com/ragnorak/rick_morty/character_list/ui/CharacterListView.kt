@@ -2,18 +2,25 @@ package com.ragnorak.rick_morty.character_list.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.ArcMode
+import androidx.compose.animation.core.ExperimentalAnimationSpecApi
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -39,6 +46,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -64,7 +73,8 @@ fun CharacterListScreen(
     var isRefreshing by remember { mutableStateOf(false) }
 
     PullToRefreshBox(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
         state = pullRefreshState,
         isRefreshing = isRefreshing,
@@ -112,6 +122,7 @@ private fun CharacterListView(
     actions: CharacterListActions
 ) {
     val gridState = rememberLazyGridState()
+    val isExiting = remember { mutableStateOf(true) }
     val characters = if (uiState.searchQuery.isEmpty()) {
         (uiState.listState as ViewState.Success<List<CharacterModel>>).data
     } else {
@@ -129,16 +140,19 @@ private fun CharacterListView(
             }
         }
     }
-    Scaffold(
+    LaunchedEffect(uiState.listState) {
+        if (uiState.listState is ViewState.Success) {
+            isExiting.value = true
+        }
+    }
+
+    Scaffold(modifier = Modifier.imePadding(),
         topBar = {
-            with(animatedVisibilityScope) {
+            with(sharedTransitionScope) {
                 Column(
-                   modifier = Modifier.animateEnterExit(
-                       enter = slideInVertically(
-                            animationSpec = tween(durationMillis = 500),
-                       ),
-                       exit = slideOutVertically()
-                   )
+                    modifier = Modifier.renderInSharedTransitionScopeOverlay(
+                        renderInOverlay = { isExiting.value }
+                    )
                 ) {
                     SearchBar(
                         uiState = uiState,
@@ -158,17 +172,21 @@ private fun CharacterListView(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(dimensionResource(id = R.dimen.paddingXS)),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS)),
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingS))
+                    .padding(horizontal = dimensionResource(id = R.dimen.paddingXS)),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingXS)),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.paddingXS))
             ) {
                 items(characters.size, key = { it }) { index ->
                     val character = characters[index]
                     CharacterItem(
                         sharedTransitionScope = sharedTransitionScope,
                         animatedVisibilityScope = animatedVisibilityScope,
-                        character,
-                        actions.onItemClick
+                        character = character,
+                        onItemClick =
+                            {
+                                isExiting.value = false
+                                actions.onItemClick(it)
+                            }
                     )
                 }
             }
@@ -196,7 +214,7 @@ private fun CharacterItem(
                     modifier = Modifier
                         .sharedElement(
                             state = rememberSharedContentState(key = "image-${character.image}"),
-                            animatedVisibilityScope = animatedVisibilityScope
+                            animatedVisibilityScope = animatedVisibilityScope,
                         )
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.medium),

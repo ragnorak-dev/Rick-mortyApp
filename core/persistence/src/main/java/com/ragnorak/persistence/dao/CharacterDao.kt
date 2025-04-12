@@ -21,16 +21,4 @@ interface CharacterDao {
 
     @Query("SELECT * FROM character_list WHERE id = :id")
     suspend fun getCharacterById(id: Int): CharacterEntity?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCharacters(characters: List<CharacterEntity>)
-
-    @Query("SELECT * FROM character_list")
-    suspend fun getAllCharacters(): List<CharacterEntity>?
-
-    @Query("DELETE FROM character_list")
-    suspend fun clearCharacters()
-
-    @Query("DELETE FROM character_list_entity")
-    suspend fun clearCharacterLists()
 }

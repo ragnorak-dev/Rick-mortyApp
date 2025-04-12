@@ -2,8 +2,8 @@ package com.ragnorak.rick_morty.character_list.di
 
 import com.ragnorak.api.RickAndMortyApi
 import com.ragnorak.persistence.dao.CharacterDao
-import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListLocalDataSource
+import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -15,6 +16,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    detekt {
+        config.setFrom(files("$rootDir/detekt-compose-config.yml"))
+        buildUponDefaultConfig = true
     }
 
     buildTypes {
@@ -64,4 +70,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.ui.tooling)
+
+    detektPlugins(libs.detekt.formatting)
 }

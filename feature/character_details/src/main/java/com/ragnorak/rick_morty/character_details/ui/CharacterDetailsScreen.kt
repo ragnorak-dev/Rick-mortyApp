@@ -36,17 +36,19 @@ fun CharacterDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     uiState: ViewState<CharacterDetailsModel> = ViewState.Idle,
 ) {
-
     Box(
         contentAlignment = Alignment.Center,
     ) {
         when (uiState) {
             is ViewState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     LoadingComponent()
                 }
-        }
+            }
+
             is ViewState.Success -> CharacterDetailsView(
                 sharedTransitionScope = sharedTransitionScope,
                 animatedVisibilityScope = animatedVisibilityScope,
@@ -66,7 +68,6 @@ fun CharacterDetailsView(
     animatedVisibilityScope: AnimatedVisibilityScope,
     data: CharacterDetailsModel
 ) {
-
     with(sharedTransitionScope) {
         Column(
             modifier = Modifier
@@ -117,7 +118,6 @@ private fun CardInfo(label: String, value: String) {
         }
     }
 }
-
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)

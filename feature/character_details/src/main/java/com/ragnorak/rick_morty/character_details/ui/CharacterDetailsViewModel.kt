@@ -22,7 +22,7 @@ class CharacterDetailsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun getCharacterDetails(id: Int) {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = ViewState.Loading
             repository.getCharacterDetails(id)
                 .onSuccess {

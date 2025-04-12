@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import com.ragnorak.api.errorhandler.OwnHttpException
 import com.ragnorak.ui.R
 
-
 fun Throwable.mapToUiError(retryAction: () -> Unit): UiError {
     return when (this) {
         is OwnHttpException -> when (this) {
@@ -53,7 +52,6 @@ fun Throwable.mapToUiError(retryAction: () -> Unit): UiError {
         else -> UiError.Resource(R.string.error_unknown)
     }
 }
-
 
 sealed class UiError {
     data class Resource(@StringRes val resId: Int) : UiError()

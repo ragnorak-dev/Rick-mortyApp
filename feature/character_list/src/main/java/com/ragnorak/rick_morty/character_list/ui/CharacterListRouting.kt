@@ -1,6 +1,5 @@
 package com.ragnorak.rick_morty.character_list.ui
 
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +15,9 @@ import com.ragnorak.navigation.CharacterListDestination
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.characterListRouting(
     sharedTransitionScope: SharedTransitionScope,
-    navController: NavController) {
+    navController: NavController
+) {
+
     composable<CharacterListDestination> {
         val viewModel: CharacterListViewModel = hiltViewModel()
         val uiState by viewModel.characterListState.collectAsStateWithLifecycle()

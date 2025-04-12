@@ -8,22 +8,20 @@ class CharacterListLocalDataSource @Inject constructor(
     private val dao: CharacterDao
 ) {
 
-suspend fun getCharactersByPage(page: Int): Result<CharacterListEntity> =
-    try {
-        dao.getCharacterListByPage(page)?.let {
-            Result.success(it)
-        } ?: Result.failure(Exception("Character list not found"))
+    suspend fun getCharactersByPage(page: Int): Result<CharacterListEntity> =
+        try {
+            dao.getCharacterListByPage(page)?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Character list not found"))
 
-    } catch (exception: Exception) {
-        Result.failure(exception)
-    }
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
 
-
-suspend fun saveCharactersPage(charactersPage: CharacterListEntity) =
-    try {
-        Result.success(dao.insertCharacterList(charactersPage))
-    } catch (exception: Exception) {
-        Result.failure(exception)
-    }
+    suspend fun saveCharactersPage(charactersPage: CharacterListEntity) =
+        try {
+            Result.success(dao.insertCharacterList(charactersPage))
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
 }
-

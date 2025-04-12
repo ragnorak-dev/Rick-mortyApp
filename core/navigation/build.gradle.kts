@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -13,6 +14,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    detekt {
+        config.setFrom(files("$rootDir/detekt-compose-config.yml"))
+        buildUponDefaultConfig = true
     }
 
     buildTypes {
@@ -35,4 +41,6 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.serialization.json)
+
+    detektPlugins(libs.detekt.formatting)
 }

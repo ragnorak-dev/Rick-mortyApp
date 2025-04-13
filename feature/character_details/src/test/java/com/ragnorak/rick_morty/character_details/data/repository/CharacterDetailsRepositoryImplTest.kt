@@ -1,6 +1,6 @@
 package com.ragnorak.rick_morty.character_details.data.repository
 
-import com.ragnorak.api.response.CharacterDto
+import com.ragnorak.network.api.response.CharacterDto
 import com.ragnorak.rick_morty.character_details.CoroutinesTestRule
 import com.ragnorak.rick_morty.character_details.data.datasource.CharacterDetailsLocalDataSource
 import com.ragnorak.rick_morty.character_details.data.datasource.CharacterDetailsRemoteDataSource

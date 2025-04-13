@@ -1,7 +1,7 @@
-package com.ragnorak.api.di
+package com.ragnorak.network.di
 
-import com.ragnorak.api.RickAndMortyApi
-import com.ragnorak.network.NetworkClient
+import com.ragnorak.network.api.RickAndMortyApi
+import com.ragnorak.network.networkclient.NetworkClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

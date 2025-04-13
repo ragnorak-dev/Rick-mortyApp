@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
-    androidTestImplementation(project(Modules.coreApi))
+    androidTestImplementation(project(Modules.coreNetwork))
     androidTestImplementation(project(Modules.coreUi))
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)

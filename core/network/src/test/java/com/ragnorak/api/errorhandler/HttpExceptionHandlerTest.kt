@@ -1,5 +1,7 @@
 package com.ragnorak.api.errorhandler
 
+import com.ragnorak.network.api.errorhandler.OwnHttpException
+import com.ragnorak.network.api.errorhandler.httpExceptionHandler
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertTrue
 import org.junit.Test

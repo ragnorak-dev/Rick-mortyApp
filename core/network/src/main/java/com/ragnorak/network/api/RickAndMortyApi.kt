@@ -1,7 +1,7 @@
-package com.ragnorak.api
+package com.ragnorak.network.api
 
-import com.ragnorak.api.response.CharacterDto
-import com.ragnorak.api.response.CharacterListDto
+import com.ragnorak.network.api.response.CharacterDto
+import com.ragnorak.network.api.response.CharacterListDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

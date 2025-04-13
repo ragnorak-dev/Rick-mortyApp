@@ -1,4 +1,4 @@
-package com.ragnorak.network
+package com.ragnorak.network.networkclient
 
 import retrofit2.Retrofit
 

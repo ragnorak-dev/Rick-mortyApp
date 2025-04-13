@@ -1,8 +1,8 @@
 package com.ragnorak.rick_morty.character_details.data.datasource
 
-import com.ragnorak.api.RickAndMortyApi
-import com.ragnorak.api.errorhandler.httpExceptionHandler
-import com.ragnorak.api.response.CharacterDto
+import com.ragnorak.network.api.RickAndMortyApi
+import com.ragnorak.network.api.errorhandler.httpExceptionHandler
+import com.ragnorak.network.api.response.CharacterDto
 import javax.inject.Inject
 
 class CharacterDetailsRemoteDataSource @Inject constructor(

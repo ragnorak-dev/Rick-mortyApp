@@ -1,4 +1,4 @@
-package com.ragnorak.api.errorhandler
+package com.ragnorak.network.api.errorhandler
 
 sealed class OwnHttpException : Throwable() {
     data object BadRequest : OwnHttpException() {

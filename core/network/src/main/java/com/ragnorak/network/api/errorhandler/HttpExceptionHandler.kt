@@ -1,4 +1,4 @@
-package com.ragnorak.api.errorhandler
+package com.ragnorak.network.api.errorhandler
 
 import retrofit2.HttpException
 

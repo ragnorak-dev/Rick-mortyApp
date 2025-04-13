@@ -8,6 +8,8 @@ import com.ragnorak.rick_morty.character_list.domain.repository.CharacterListRep
 import com.ragnorak.ui.ViewState
 import com.ragnorak.ui.errormanage.mapToUiError
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-    private val characterListRepository: CharacterListRepository
+    private val characterListRepository: CharacterListRepository,
+    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _characterListState = MutableStateFlow(CharacterListUiState())
@@ -72,7 +75,7 @@ class CharacterListViewModel @Inject constructor(
     }
 
     private fun searchRemoteQuery(query: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             _characterListState.value =
                 _characterListState.value.copy(listState = ViewState.Loading)
             characterListRepository.getCharactersByName(query).onSuccess {
@@ -95,7 +98,7 @@ class CharacterListViewModel @Inject constructor(
     }
 
     private fun getCharacters(isRefreshing: Boolean = false, page: Int = currentPage) {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             if (!isRefreshing && page == 0) {
                 _characterListState.value =
                     _characterListState.value.copy(listState = ViewState.Loading)

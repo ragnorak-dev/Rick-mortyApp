@@ -31,7 +31,7 @@ class CharacterListViewModelTest {
     @Before
     fun setUp() {
         repository = mockk()
-        sut = CharacterListViewModel(repository)
+        sut = CharacterListViewModel(repository, coroutineDispatcher = coroutinesTestRule.testDispatcher)
     }
 
     @Test

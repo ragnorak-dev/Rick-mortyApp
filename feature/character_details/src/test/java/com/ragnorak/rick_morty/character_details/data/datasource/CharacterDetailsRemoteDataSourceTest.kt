@@ -1,8 +1,8 @@
 package com.ragnorak.rick_morty.character_details.data.datasource
 
-import com.ragnorak.api.RickAndMortyApi
-import com.ragnorak.api.errorhandler.OwnHttpException
-import com.ragnorak.api.response.CharacterDto
+import com.ragnorak.network.api.RickAndMortyApi
+import com.ragnorak.network.api.errorhandler.OwnHttpException
+import com.ragnorak.network.api.response.CharacterDto
 import com.ragnorak.rick_morty.character_details.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.mockk

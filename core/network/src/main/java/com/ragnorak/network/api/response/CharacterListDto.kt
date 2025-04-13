@@ -1,4 +1,4 @@
-package com.ragnorak.api.response
+package com.ragnorak.network.api.response
 
 import kotlinx.serialization.Serializable
 

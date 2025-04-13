@@ -1,6 +1,6 @@
 package com.ragnorak.rick_morty.character_details.data.mapper
 
-import com.ragnorak.api.response.CharacterDto
+import com.ragnorak.network.api.response.CharacterDto
 import com.ragnorak.persistence.entity.CharacterEntity
 import com.ragnorak.rick_morty.character_details.domain.model.CharacterDetailsModel
 

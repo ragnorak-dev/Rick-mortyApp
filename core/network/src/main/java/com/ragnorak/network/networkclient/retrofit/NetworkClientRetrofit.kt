@@ -1,8 +1,8 @@
-package com.ragnorak.network.retrofit
+package com.ragnorak.network.networkclient.retrofit
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ragnorak.network.Constants.BASE_URL
-import com.ragnorak.network.NetworkClient
+import com.ragnorak.network.networkclient.Constants.BASE_URL
+import com.ragnorak.network.networkclient.NetworkClient
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient

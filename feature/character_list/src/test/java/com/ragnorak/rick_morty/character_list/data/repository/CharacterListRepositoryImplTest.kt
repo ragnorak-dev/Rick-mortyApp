@@ -1,6 +1,6 @@
 package com.ragnorak.rick_morty.character_list.data.repository
 
-import com.ragnorak.api.response.CharacterListDto
+import com.ragnorak.network.api.response.CharacterListDto
 import com.ragnorak.rick_morty.character_list.CoroutinesTestRule
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListLocalDataSource
 import com.ragnorak.rick_morty.character_list.data.datasource.CharacterListRemoteDataSource
@@ -34,7 +34,7 @@ class CharacterListRepositoryImplTest {
 
     @Test
     fun `getCharacters returns success when dataSource returns success`() = runTest {
-        val response = mockk<CharacterListDto>(relaxed = true)
+        val response = mockk<com.ragnorak.network.api.response.CharacterListDto>(relaxed = true)
         val expected = response.toModel()
         coEvery { localDataSource.saveCharactersPage(any()) } returns Result.success(Unit)
         coEvery { remoteDataSource.getCharacters(page = 0) } returns Result.success(response)
@@ -58,7 +58,7 @@ class CharacterListRepositoryImplTest {
 
     @Test
     fun `getCharacters returns remote data when cache is valid but local fails`() = runTest {
-        val response = mockk<CharacterListDto>(relaxed = true)
+        val response = mockk<com.ragnorak.network.api.response.CharacterListDto>(relaxed = true)
         val expected = response.toModel()
 
         coEvery { localDataSource.getCharactersByPage(0) } returns Result.failure(Exception("local error"))
@@ -73,7 +73,7 @@ class CharacterListRepositoryImplTest {
 
     @Test
     fun `getCharacters returns remote data when cache is invalid`() = runTest {
-        val response = mockk<CharacterListDto>(relaxed = true)
+        val response = mockk<com.ragnorak.network.api.response.CharacterListDto>(relaxed = true)
         val expected = response.toModel()
 
         val validator = com.ragnorak.persistence.validatecache.CacheValidator

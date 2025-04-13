@@ -1,50 +1,50 @@
 package com.ragnorak.ui.errormanage
 
 import androidx.annotation.StringRes
-import com.ragnorak.api.errorhandler.OwnHttpException
+import com.ragnorak.network.api.errorhandler.OwnHttpException
 import com.ragnorak.ui.R
 
 fun Throwable.mapToUiError(retryAction: () -> Unit): UiError {
     return when (this) {
-        is OwnHttpException -> when (this) {
-            is OwnHttpException.BadRequest -> UiError.WithAction(
+        is com.ragnorak.network.api.errorhandler.OwnHttpException -> when (this) {
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.BadRequest -> UiError.WithAction(
                 R.string.error_bad_request,
                 retryAction
             )
 
-            is OwnHttpException.Forbidden -> UiError.Resource(R.string.error_forbidden)
-            is OwnHttpException.NotFound -> UiError.Resource(R.string.error_not_found)
-            is OwnHttpException.RequestTimeout -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.Forbidden -> UiError.Resource(R.string.error_forbidden)
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.NotFound -> UiError.Resource(R.string.error_not_found)
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.RequestTimeout -> UiError.WithAction(
                 R.string.error_request_timeout,
                 retryAction
             )
 
-            is OwnHttpException.TooManyRequests -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.TooManyRequests -> UiError.WithAction(
                 R.string.error_too_many_requests,
                 retryAction
             )
 
-            is OwnHttpException.InternalServerError -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.InternalServerError -> UiError.WithAction(
                 R.string.error_internal_server_error,
                 retryAction
             )
 
-            is OwnHttpException.BadGateway -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.BadGateway -> UiError.WithAction(
                 R.string.error_bad_gateway,
                 retryAction
             )
 
-            is OwnHttpException.ServiceUnavailable -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.ServiceUnavailable -> UiError.WithAction(
                 R.string.error_service_unavailable,
                 retryAction
             )
 
-            is OwnHttpException.GatewayTimeout -> UiError.WithAction(
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.GatewayTimeout -> UiError.WithAction(
                 R.string.error_gateway_timeout,
                 retryAction
             )
 
-            is OwnHttpException.Unknown -> {
+            is com.ragnorak.network.api.errorhandler.OwnHttpException.Unknown -> {
                 UiError.WithAction(R.string.error_unknown, retryAction)
             }
         }

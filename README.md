@@ -59,6 +59,8 @@ Repository
 
 The `ViewModel` exposes a `StateFlow` with the current screen state. Each user action is modeled as an `Intent` processed by the `ViewModel`.
 
+![RickAndMorty_modules_diagram drawio](https://github.com/user-attachments/assets/a832f452-2797-40c6-ae64-07fe9c718126)
+
 ---
 
 ## 📊 Features
@@ -85,4 +87,10 @@ The `ViewModel` exposes a `StateFlow` with the current screen state. Each user a
 - `ViewState` representation for loading/success/error states
 - Detekt configured for Jetpack Compose
 - Unit tests in ViewModel, repository, and error handling
-- Integration test with the happy patch list and navigation to details
+- Integration test with the happy patch list and navigation to details.
+
+
+
+https://github.com/user-attachments/assets/5018404e-4052-4ce5-b3d0-52ac976b2596
+
+
